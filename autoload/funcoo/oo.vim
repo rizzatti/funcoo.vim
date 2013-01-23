@@ -51,5 +51,9 @@ function! s:class.new(name, ...) dict abort "{{{
 endfunction
 "}}}
 
+lockvar s:obj
+lockvar s:object
+lockvar s:class
+
 let funcoo#oo#class = s:class
 let funcoo#oo#object = s:object

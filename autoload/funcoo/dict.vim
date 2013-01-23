@@ -17,3 +17,5 @@ function! funcoo#dict#module.extend(destination, ...) abort "{{{
   return extended
 endfunction
 "}}}
+
+lockvar funcoo#dict#module
