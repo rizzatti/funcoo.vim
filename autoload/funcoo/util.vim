@@ -2,17 +2,10 @@
 " Author: Zeh Rizzatti <zehrizzatti@gmail.com>
 " License: MIT
 
-let s:util = {}
-
-function! s:util.clone(item) abort "{{{
-  return copy(a:item)
-endfunction
-"}}}
-
-function! s:util.isEmpty(item) abort "{{{
-  return empty(a:item)
-endfunction
-"}}}
+let s:util         = {}
+let s:util.clone   = function('copy')
+let s:util.isEmpty = function('empty')
+let s:util.size    = function('len')
 
 function! s:util.isFloat(item) abort "{{{
   return type(a:item) == type(0.0)
@@ -41,11 +34,6 @@ endfunction
 
 function! s:util.isString(item) abort "{{{
   return type(a:item) == type('')
-endfunction
-"}}}
-
-function! s:util.size(item) abort "{{{
-  return len(a:item)
 endfunction
 "}}}
 
