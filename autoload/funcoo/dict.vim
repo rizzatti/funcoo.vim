@@ -4,13 +4,13 @@
 
 let funcoo#dict#module = {}
 
-function! funcoo#dict#module.clone(object) abort "{{{
+function! funcoo#dict#module.clone(object) abort dict "{{{
   return copy(a:object)
 endfunction
 "}}}
 
-function! funcoo#dict#module.extend(destination, ...) abort "{{{
-  let extended = funcoo#clone(destination)
+function! funcoo#dict#module.extend(destination, ...) abort dict "{{{
+  let extended = self.clone(a:destination)
   for source in a:000
     call extend(extended, source)
   endfor
@@ -18,4 +18,11 @@ function! funcoo#dict#module.extend(destination, ...) abort "{{{
 endfunction
 "}}}
 
-lockvar funcoo#dict#module
+function! funcoo#dict#module.uuid() dict abort "{{{
+  return reltimestr(reltime())
+endfunction
+"}}}
+
+if !exists('funcoo_debug') || !funcoo_debug
+  lockvar funcoo#dict#module
+endif

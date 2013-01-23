@@ -18,6 +18,7 @@ endfunction
 
 function! s:class.include(object) dict abort "{{{
   let self.__proto__ = s:foo.extend(self.__proto__, a:object)
+  return self
 endfunction
 "}}}
 
@@ -51,9 +52,13 @@ function! s:class.new(name, ...) dict abort "{{{
 endfunction
 "}}}
 
-lockvar s:obj
-lockvar s:object
-lockvar s:class
+let s:object.__proto__ = s:obj
+
+if !exists('funcoo_debug') || !funcoo_debug
+  lockvar s:obj
+  lockvar s:object
+  lockvar s:class
+endif
 
 let funcoo#oo#class = s:class
 let funcoo#oo#object = s:object
