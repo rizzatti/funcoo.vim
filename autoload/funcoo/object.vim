@@ -37,6 +37,16 @@ function! s:proto.constructor() dict abort "{{{
 endfunction
 "}}}
 
+function! s:proto.__super(name, ...) dict abort "{{{
+  if s:util.isFunction(a:name)
+    let Func = a:name
+  else
+    let Func = s:dict.get(self.__super__, a:name)
+  endif
+  return call(Func, a:000, self)
+endfunction
+"}}}
+
 let funcoo#object#class  = s:object
 
 if !exists('funcoo_debug') || !funcoo_debug
