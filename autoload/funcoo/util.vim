@@ -2,10 +2,11 @@
 " Author: Zeh Rizzatti <zehrizzatti@gmail.com>
 " License: MIT
 
-let s:util         = {}
-let s:util.clone   = function('copy')
-let s:util.isEmpty = function('empty')
-let s:util.size    = function('len')
+let s:util          = {}
+let s:util.clone    = function('copy')
+let s:util.isEmpty  = function('empty')
+let s:util.size     = function('len')
+let s:util.toString = function('string')
 
 function! s:util.isFloat(item) abort "{{{
   return type(a:item) == type(0.0)

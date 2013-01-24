@@ -12,7 +12,6 @@ let s:dict.keys     = function('keys')
 let s:dict.max      = function('max')
 let s:dict.min      = function('min')
 let s:dict.remove   = function('remove')
-let s:dict.toString = function('string')
 let s:dict.values   = function('values')
 
 function! s:dict.extend(destination, ...) abort dict "{{{

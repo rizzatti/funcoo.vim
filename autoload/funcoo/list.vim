@@ -18,7 +18,6 @@ let s:list.remove   = function('remove')
 let s:list.reverse  = function('reverse')
 let s:list.sort     = function('sort')
 let s:list.times    = function('repeat')
-let s:list.toString = function('string')
 
 function! s:list.clear(list) abort "{{{
   return s:list.filter(a:list, 0)
