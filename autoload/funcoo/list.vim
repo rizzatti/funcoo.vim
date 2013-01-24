@@ -25,24 +25,6 @@ function! s:list.clear(list) abort "{{{
 endfunction
 "}}}
 
-function! s:list.filter(list, expression) abort "{{{
-  if s:util.isFunction(a:expression)
-    return filter(a:list, 'a:expression(v:val, v:key)')
-  else
-    return filter(a:list, a:expression)
-  endif
-endfunction
-"}}}
-
-function! s:list.map(list, expression) abort "{{{
-  if s:util.isFunction(a:expression)
-    return map(a:list, 'a:expression(v:val, v:key)')
-  else
-    return map(a:list, a:expression)
-  endif
-endfunction
-"}}}
-
 function! s:list.pop(list) abort "{{{
   return s:list.remove(a:list, -1)
 endfunction

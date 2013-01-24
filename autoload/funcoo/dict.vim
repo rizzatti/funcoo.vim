@@ -25,24 +25,6 @@ function! s:dict.extend(destination, ...) abort dict "{{{
 endfunction
 "}}}
 
-function! s:dict.filter(dict, expression) abort "{{{
-  if s:util.isFunction(a:expression)
-    return filter(a:dict, 'a:expression(v:val, v:key)')
-  else
-    return filter(a:list, a:expression)
-  endif
-endfunction
-"}}}
-
-function! s:dict.map(dict, expression) abort "{{{
-  if s:util.isFunction(a:expression)
-    return map(a:dict, 'a:expression(v:val, v:key)')
-  else
-    return map(a:list, a:expression)
-  endif
-endfunction
-"}}}
-
 let funcoo#dict#module = s:dict
 
 if !exists('funcoo_debug') || !funcoo_debug
