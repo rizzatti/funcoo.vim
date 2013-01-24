@@ -8,6 +8,20 @@ let s:dict = funcoo#dict#module
 let s:object           = {}
 let s:object.__super__ = 0
 
+function! s:object.extend(...) dict abort "{{{
+  let child              = a:0 ? a:1 : {}
+  let extended           = s:dict.extend(child, self)
+  let extended.__proto__ = s:util.clone(self.__proto__)
+  let extended.__super__ = self.__proto__
+  return extended
+endfunction
+"}}}
+
+function! s:object.include(module) dict abort "{{{
+  return s:dict.extend(self.__proto__, a:module)
+endfunction
+"}}}
+
 function! s:object.new(...) dict abort "{{{
   let instance = s:util.clone(self.__proto__)
   let instance.__super__ = self.__super__
@@ -24,19 +38,6 @@ endfunction
 "}}}
 
 let funcoo#object#class  = s:object
-
-function! funcoo#object#extend(child, parent) abort "{{{
-  let extended           = s:dict.extend(a:child, a:parent)
-  let extended.__proto__ = s:util.clone(a:parent.__proto__)
-  let extended.__super__ = a:parent.__proto__
-  return extended
-endfunction
-"}}}
-
-function! funcoo#object#include(object, module) abort "{{{
-  return s:dict.extend(a:object.__proto__, a:module)
-endfunction
-"}}}
 
 if !exists('funcoo_debug') || !funcoo_debug
   lockvar s:proto
