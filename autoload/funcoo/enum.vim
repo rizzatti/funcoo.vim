@@ -9,11 +9,15 @@ let s:enum = {}
 function! s:enum.all(thing, function) abort "{{{
   if s:util.isList(a:thing)
     for index in s:list.range(s:util.size(a:thing))
-      call a:function(a:thing[index], index) ? continue : return 0
+      if !a:function(a:thing[index], index)
+        return 0
+      endif
     endfor
   elseif s:util.isDict(a:thing)
     for [key, value] in a:thing
-      call a:function(value, key) ? continue : return 0
+      if !a:function(value, key)
+        return 0
+      endif
     endfor
   else
     return 0
@@ -25,11 +29,15 @@ endfunction
 function! s:enum.any(thing, function) abort "{{{
   if s:util.isList(a:thing)
     for index in s:list.range(s:util.size(a:thing))
-      call a:function(a:thing[index], index) ? return 1 : continue
+      if a:function(a:thing[index], index)
+        return 1
+      endif
     endfor
   elseif s:util.isDict(a:thing)
     for [key, value] in a:thing
-      call a:function(value, key) ? return 1 : continue
+      if a:function(value, key)
+        return 1
+      endif
     endfor
   else
     return 1
@@ -55,12 +63,15 @@ endfunction
 function! s:enum.find(thing, function) abort "{{{
   if s:util.isList(a:thing)
     for index in s:list.range(s:util.size(a:thing))
-      let value = a:thing[index]
-      call a:function(value, index) ? return value : continue
+      if a:function(a:thing[index], index)
+        return a:thing[index]
+      endif
     endfor
   elseif s:util.isDict(a:thing)
     for [key, value] in a:thing
-      call a:function(value, key) ? return value : continue
+      if a:function(value, key)
+        return value
+      endif
     endfor
   endif
   return 0
@@ -73,16 +84,20 @@ endfunction
 "}}}
 
 function! s:enum.none(thing, function) abort "{{{
-  let count = 0
+  let counter = 0
   if s:util.isList(a:thing)
     for index in s:list.range(s:util.size(a:thing))
-      count += call a:function(a:thing[index], index) ? 1 : 0
-      count ? return 0 : continue
+      let counter += a:function(a:thing[index], index) ? 1 : 0
+      if counter
+        return 0
+      endif
     endfor
   elseif s:util.isDict(a:thing)
     for [key, value] in a:thing
-      count += call a:function(value, key) ? 1 : 0
-      count ? return 0 : continue
+      let counter += a:function(value, key) ? 1 : 0
+      if counter
+        return 0
+      endif
     endfor
   else
     return 0
@@ -92,21 +107,25 @@ endfunction
 "}}}
 
 function! s:enum.one(thing, function) abort "{{{
-  let count = 0
+  let counter = 0
   if s:util.isList(a:thing)
     for index in s:list.range(s:util.size(a:thing))
-      count += call a:function(a:thing[index], index) ? 1 : 0
-      count > 1 ? return 0 : continue
+      let counter += a:function(a:thing[index], index) ? 1 : 0
+      if counter > 1
+        return 0
+      endif
     endfor
   elseif s:util.isDict(a:thing)
     for [key, value] in a:thing
-      count += call a:function(value, key) ? 1 : 0
-      count > 1 ? return 0 : continue
+      let counter += a:function(value, key) ? 1 : 0
+      if counter > 1
+        return 0
+      endif
     endfor
   else
     return 0
   endif
-  return count
+  return counter
 endfunction
 "}}}
 
