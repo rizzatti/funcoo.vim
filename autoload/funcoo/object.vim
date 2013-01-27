@@ -2,54 +2,62 @@
 " Author: Zeh Rizzatti <zehrizzatti@gmail.com>
 " License: MIT
 
-let s:util = funcoo#util#module
-let s:dict = funcoo#dict#module
+let s:class           = {}
+let s:class.__super__ = 0
+let s:class.__proto__ = {}
 
-let s:object           = {}
-let s:object.__super__ = 0
-
-function! s:object.extend(...) dict abort "{{{
-  let child              = a:0 ? a:1 : {}
-  let extended           = s:dict.extend(child, self)
-  let extended.__proto__ = s:util.clone(self.__proto__)
-  let extended.__super__ = self.__proto__
-  return extended
+function! s:class.extend() dict abort "{{{
+  let child = copy(self)
+  let child.__super__ = self
+  let child.__proto__ = copy(self.__proto__)
+  lockvar child.__super__
+  lockvar child.__proto__
+  lockvar child.extend
+  lockvar child.include
+  lockvar child.new
+  lockvar child.__super
+  return child
 endfunction
 "}}}
 
-function! s:object.include(module) dict abort "{{{
-  return s:dict.extend(self.__proto__, a:module)
+function! s:class.include(prototype) dict abort "{{{
+  unlockvar self.__proto__
+  call extend(self.__proto__, a:prototype)
+  lockvar self.__proto__
 endfunction
 "}}}
 
-function! s:object.new(...) dict abort "{{{
-  let instance = s:util.clone(self.__proto__)
-  let instance.__super__ = self.__super__
+function! s:class.new(...) dict abort "{{{
+  let instance = copy(self.__proto__)
+  let instance.__class__ = self
+  let instance.__super__ = self.__super__.__proto__
+  lockvar instance.__super
   call call(instance.constructor, a:000, instance)
   return instance
 endfunction
 "}}}
 
-let s:proto            = {}
-let s:object.__proto__ = s:proto
-
-function! s:proto.constructor() dict abort "{{{
-endfunction
-"}}}
-
-function! s:proto.__super(name, ...) dict abort "{{{
-  if s:util.isFunction(a:name)
+function! s:class.__super(name, ...) dict abort "{{{
+  if g:funcoo#util#module.isFunction(a:name)
     let Func = a:name
   else
-    let Func = s:dict.get(self.__super__, a:name)
+    let Func = get(self.__super__, a:name)
   endif
   return call(Func, a:000, self)
 endfunction
 "}}}
 
-let funcoo#object#class  = s:object
+let s:proto = {}
+let s:proto.__super = s:class.__super
+
+function! s:proto.constructor() dict abort "{{{
+endfunction
+"}}}
+
+call s:class.include(s:proto)
+
+let funcoo#object#class  = s:class
 
 if !exists('funcoo_debug') || !funcoo_debug
-  lockvar s:proto
-  lockvar s:object
+  lockvar! s:class
 endif
