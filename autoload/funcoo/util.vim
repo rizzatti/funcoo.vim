@@ -2,49 +2,49 @@
 " Author: Zeh Rizzatti <zehrizzatti@gmail.com>
 " License: MIT
 
-let s:util = {}
+let s:module = {}
 
-function! s:util.isDict(item) abort "{{{
+function! s:module.isDict(item) abort "{{{
   return type(a:item) == type({})
 endfunction
 "}}}
 
-function! s:util.isFloat(item) abort "{{{
+function! s:module.isFloat(item) abort "{{{
   return type(a:item) == type(0.0)
 endfunction
 "}}}
 
-function! s:util.isFunction(item) abort "{{{
+function! s:module.isFunction(item) abort "{{{
   return type(a:item) == type(function('tr'))
 endfunction
 "}}}
 
-function! s:util.isList(item) abort "{{{
+function! s:module.isList(item) abort "{{{
   return type(a:item) == type([])
 endfunction
 "}}}
 
-function! s:util.isNumber(item) abort "{{{
+function! s:module.isNumber(item) abort "{{{
   return type(a:item) == type(0)
 endfunction
 "}}}
 
-function! s:util.isObject(item) dict abort "{{{
-  return s:util.isDict(a:item) && exists('a:item["__super__"]')
+function! s:module.isObject(item) abort "{{{
+  return s:module.isDict(a:item) && exists('a:item["__super__"]')
 endfunction
 "}}}
 
-function! s:util.isString(item) abort "{{{
+function! s:module.isString(item) abort "{{{
   return type(a:item) == type('')
 endfunction
 "}}}
 
-function! s:util.uuid() abort "{{{
+function! s:module.uuid() abort "{{{
   return reltimestr(reltime())
 endfunction
 "}}}
 
-let funcoo#util#module = s:util
+let funcoo#util#module = s:module
 
 if !exists('funcoo_debug') || !funcoo_debug
   lockvar! funcoo#util#module
