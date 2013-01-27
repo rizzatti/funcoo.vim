@@ -4,6 +4,19 @@
 
 let s:module = {}
 
+function! s:module.echo(...) abort "{{{
+  let matches = matchlist(a:1, '^\[\(\w\+\)\]$')
+  redraw
+  if len(matches)
+    execute 'echohl' matches[1]
+    echo join(a:000[1:])
+    echohl None
+  else
+    echo join(a:000)
+  endif
+endfunction
+"}}}
+
 function! s:module.isDict(item) abort "{{{
   return type(a:item) == type({})
 endfunction
