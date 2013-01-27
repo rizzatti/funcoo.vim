@@ -143,5 +143,5 @@ endfunction
 let funcoo#enum#module = s:module
 
 if !exists('funcoo_debug') || !funcoo_debug
-  lockvar funcoo#enum#module
+  lockvar! funcoo#enum#module
 endif

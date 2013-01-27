@@ -59,5 +59,5 @@ call s:class.include(s:proto)
 let funcoo#object#class  = s:class
 
 if !exists('funcoo_debug') || !funcoo_debug
-  lockvar! s:class
+  lockvar! funcoo#object#class
 endif
