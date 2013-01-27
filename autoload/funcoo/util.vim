@@ -2,11 +2,12 @@
 " Author: Zeh Rizzatti <zehrizzatti@gmail.com>
 " License: MIT
 
-let s:util          = {}
-let s:util.clone    = function('copy')
-let s:util.isEmpty  = function('empty')
-let s:util.size     = function('len')
-let s:util.toString = function('string')
+let s:util = {}
+
+function! s:util.isDict(item) abort "{{{
+  return type(a:item) == type({})
+endfunction
+"}}}
 
 function! s:util.isFloat(item) abort "{{{
   return type(a:item) == type(0.0)
@@ -23,13 +24,13 @@ function! s:util.isList(item) abort "{{{
 endfunction
 "}}}
 
-function! s:util.isDict(item) abort "{{{
-  return type(a:item) == type({})
+function! s:util.isNumber(item) abort "{{{
+  return type(a:item) == type(0)
 endfunction
 "}}}
 
-function! s:util.isNumber(item) abort "{{{
-  return type(a:item) == type(0)
+function! s:util.isObject(item) dict abort "{{{
+  return s:util.isDict(a:item) && exists('a:item["__super__"]')
 endfunction
 "}}}
 
@@ -46,5 +47,5 @@ endfunction
 let funcoo#util#module = s:util
 
 if !exists('funcoo_debug') || !funcoo_debug
-  lockvar funcoo#util#module
+  lockvar! funcoo#util#module
 endif
