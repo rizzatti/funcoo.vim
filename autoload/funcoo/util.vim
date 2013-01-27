@@ -39,6 +39,29 @@ function! s:module.isString(item) abort "{{{
 endfunction
 "}}}
 
+function! s:module.sandbox(function, args, ...) abort "{{{
+  if !s:module.isFunction(a:function)
+    return 0
+  endif
+
+  let context = get(a:000, 0, {})
+  let Before  = get(a:000, 1, 0)
+  let After   = get(a:000, 2, 0)
+  let sandbox = {}
+  if s:module.isFunction(Before)
+    call call(Before, [sandbox], context)
+  endif
+  try
+    let result = call(a:function, a:args, context)
+  finally
+    if s:module.isFunction(After)
+      call call(After, [sandbox], context)
+    endif
+  endtry
+  return result
+endfunction
+"}}}
+
 function! s:module.uuid() abort "{{{
   return reltimestr(reltime())
 endfunction
