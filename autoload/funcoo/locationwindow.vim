@@ -14,7 +14,7 @@ function! s:proto.open(...) dict abort "{{{
   let [force, prefix, height] = self._parse(a:000)
   let command = force ? 'lopen' : 'lwindow'
   execute prefix command height
-  let current = funcoo#window#class.current()
+  let current = g:funcoo#window#class.current()
   if (current.get('&buftype') ==# 'quickfix')
     let self.id = current.id
   endif
