@@ -34,8 +34,8 @@ let s:proto = {}
 function! s:proto.constructor(number) dict abort "{{{
   let uuid = self.__class__.get(a:number, 'window_id')
   if empty(uuid)
-    let self.id = funcoo#util#module.uuid()
-    self.__class__.set(a:number, 'window_id', self.id)
+    let self.id = g:funcoo#util#module.uuid()
+    call self.__class__.set(a:number, 'window_id', self.id)
   else
     let self.id = uuid
   endif
