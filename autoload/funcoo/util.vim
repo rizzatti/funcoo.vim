@@ -3,6 +3,7 @@
 " License: MIT
 
 let s:module = {}
+let s:uuid = 0
 
 function! s:module.echo(...) abort "{{{
   let matches = matchlist(a:1, '^\[\(\w\+\)\]$')
@@ -76,7 +77,9 @@ endfunction
 "}}}
 
 function! s:module.uuid() abort "{{{
-  return reltimestr(reltime())
+  let value = s:uuid
+  let s:uuid += 1
+  return value
 endfunction
 "}}}
 
