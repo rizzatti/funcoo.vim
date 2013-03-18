@@ -1,5 +1,5 @@
 " Description: Functional Object Oriented goodies for Vim
-" Author: Zeh Rizzatti <zehrizzatti@gmail.com>
+" Author: José Otávio Rizzatti <zehrizzatti@gmail.com>
 " License: MIT
 
 let s:class = funcoo#object#class.extend()
