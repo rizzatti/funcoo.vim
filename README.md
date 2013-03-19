@@ -8,7 +8,7 @@ and has some functional modules.
 It's still under development, does not have any documentation, so the
 best way to see what it does would be by example.
 
-For a more basic usage, check [dash.vim][dash].
+For a more basic usage, check [dash.vim][dash].  
 For a more advanced usage, check [greper.vim][greper].
 
 If that got you interested, only then I recommend you actually check
