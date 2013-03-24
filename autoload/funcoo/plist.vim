@@ -14,7 +14,7 @@ function! s:module.parse(args) dict abort "{{{
   let value = substitute(value, '(', '[', 'g')
   let value = substitute(value, ')', ']', 'g')
   let value = substitute(value, '\(\h\+\) =', '"\1" :', 'g')
-  let value = substitute(value, '\(\h\+\);', '"\1";', 'g')
+  let value = substitute(value, '\(\h\w*\);', '"\1";', 'g')
   let value = substitute(value, ';', ',', 'g')
   let value = substitute(value, '\\\\"', '\\"', 'g')
   return join(split(value, "\n"))
